@@ -1,0 +1,21 @@
+﻿# Advent of Code 2025 in F#
+
+## First time setup
+
+Grab session cookie from browser and save it in `.token`
+
+## Download an input file
+
+```bash
+# e.g. For day 03
+./downloadDayInput.sh 3
+```
+
+## Run the solutions
+
+Ensure input files are in the `Input` directory (named `01.txt` and so on) and in the repo root run:
+```bash
+# e.g. for day 03
+dotnet run 3
+```
+or leave out the day number to run every day.

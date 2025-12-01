@@ -1,0 +1,19 @@
+﻿open AdventOfCode2025
+
+open Common
+
+printfn "🌟 Advent of Code 2025 solutions 🌟"
+
+let solutions =
+    [  ]
+
+let args = System.Environment.GetCommandLineArgs()[1..] |> Array.toList
+
+match args with
+| [] ->
+    printfn "Running all solutions"
+    solutions |> List.iter (fun solve -> solve ())
+| [ Integer i ] ->
+    printfn $"Running solution for day {i}"
+    solutions.[i - 1] ()
+| _ -> failwithf "Invalid arguments, expected a single day number."
