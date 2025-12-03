@@ -5,7 +5,10 @@ open Common
 printfn "🌟 Advent of Code 2025 solutions 🌟"
 
 let solutions =
-    [  ]
+    [
+      Day01.solve
+      Day02.solve
+    ]
 
 let args = System.Environment.GetCommandLineArgs()[1..] |> Array.toList
 

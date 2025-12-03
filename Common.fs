@@ -23,6 +23,12 @@ let (|Int64|_|) (str: string) =
     match Int64.TryParse(str) with
     | (true, integer) -> Some(integer)
     | _ -> None
+    
+let (|Prefix|_|) (p:string) (s:string) =
+    if s.StartsWith(p) then
+        Some(s.Substring(p.Length))
+    else
+        None
 
 let unpack2 (l: 'a seq) =
     match l |> Seq.toList with
