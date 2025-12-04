@@ -23,8 +23,8 @@ let (|Int64|_|) (str: string) =
     match Int64.TryParse(str) with
     | (true, integer) -> Some(integer)
     | _ -> None
-    
-let (|Prefix|_|) (p:string) (s:string) =
+
+let (|Prefix|_|) (p: string) (s: string) =
     if s.StartsWith(p) then
         Some(s.Substring(p.Length))
     else
@@ -77,3 +77,18 @@ let memoize (d: Dictionary<_, _>) fn arg =
         let res = fn arg
         d.Add(arg, res)
         res
+
+let private parseCharLine (charPicker: char -> 'a option) (y: int, line: char seq) =
+    line
+    |> Seq.indexed
+    |> Seq.choose (fun (x, c) ->
+        match charPicker c with
+        | Some v -> Some((x, y), v)
+        | None -> None)
+
+let rec parseCharGrid (charPicker: char -> 'a option) (lines: string seq) =
+    lines
+    |> Seq.indexed
+    |> Seq.collect (parseCharLine charPicker)
+    |> Map.ofSeq
+

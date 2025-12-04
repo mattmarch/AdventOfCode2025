@@ -2,27 +2,16 @@
 
 open AdventOfCode2025.Common
 
-type Square =
-    | Paper
-    | Empty
+type Paper = Paper
 
 let parseSquare square =
     match square with
-    | '@' -> Paper
-    | '.' -> Empty
+    | '@' -> Some Paper
+    | '.' -> None
     | _ -> failwithf $"Invalid square character: %c{square}"
 
-let parseLine y line =
-    line
-    |> Seq.map parseSquare
-    |> Seq.indexed
-    |> Seq.map (fun (x, square) -> (x, y), square)
-
 let parseInput (lines: string seq) =
-    lines
-    |> Seq.indexed
-    |> Seq.collect (fun (y, line) -> parseLine y line)
-    |> Map.ofSeq
+    lines |> parseCharGrid (parseSquare)
 
 let coordEmpty map coord =
     match Map.tryFind coord map with
@@ -55,10 +44,9 @@ let rec findAllRemovablePaper removedCount map =
         removedCount
     else
         let newMap =
-            removablePaper |> List.fold (fun acc coord -> Map.add coord Empty acc) map
+            removablePaper |> List.fold (fun acc coord -> Map.remove coord acc) map
 
         let newRemovedCount = removedCount + List.length removablePaper
-
         findAllRemovablePaper newRemovedCount newMap
 
 let solve () =
