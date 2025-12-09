@@ -47,10 +47,8 @@ let solve () =
     
     let input = readLines inputName |> Seq.map parseCoord |> Seq.toList
     
-    let allCombinations =
-        [ for c1 in input do for c2 in input do if c1 <> c2 then yield (c1, c2) ]
-        |> Seq.distinctBy (fun (a, b) -> Set.ofList [ a; b ])
-        
+    let allCombinations = allCombinations input
+    
     let orderedConnections =
         allCombinations
         |> Seq.map (fun pair -> pair, pair ||> distSq)

@@ -92,3 +92,9 @@ let rec parseCharGrid (charPicker: char -> 'a option) (lines: string seq) =
     |> Seq.collect (parseCharLine charPicker)
     |> Map.ofSeq
 
+let allCombinations (items: 'a seq) =
+    seq {
+        for index, item1 in Seq.indexed items do
+            for item2 in items |> Seq.skip (index + 1) do
+                yield (item1, item2)
+    }
