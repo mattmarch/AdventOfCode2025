@@ -3,6 +3,7 @@
 open System
 open System.Collections.Generic
 open System.IO
+open System.Text.RegularExpressions
 
 let splitBy (separator: string) (inputString: string) : string list =
     inputString.Split([| separator |], StringSplitOptions.RemoveEmptyEntries)
@@ -29,6 +30,12 @@ let (|Prefix|_|) (p: string) (s: string) =
         Some(s.Substring(p.Length))
     else
         None
+
+let (|ParseRegex|_|) regex str =
+   let matches = Regex(regex).Matches(str)
+   match matches |> Seq.toList with
+   | [] -> None
+   | successfulMatches -> successfulMatches |> List.map (fun m -> List.tail [for x in m.Groups -> x.Value ]) |> Some
 
 let unpack2 (l: 'a seq) =
     match l |> Seq.toList with
